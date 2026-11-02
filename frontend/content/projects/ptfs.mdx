@@ -1,0 +1,49 @@
+---
+title: "PTFS — Priority Tag File System"
+slug: "ptfs"
+tagline: "A priority-tag file system built on MIT's xv6 — touching a real kernel to learn what 'a file' actually is."
+year: "Apr 2026"
+status: shipped
+featured: false
+role: "Systems experiment — with madhav-kartikeya (25 commits)"
+stack: ["C", "xv6", "Filesystems", "Operating systems"]
+repo: "https://github.com/j4b3-21/Priority-Tag-File-System"
+og: null
+cover: "ptfs"
+contribution: "Collaborator: madhav-kartikeya (25 commits). My part: [to be filled]. Most contributors listed in the repository history are upstream MIT xv6 authors, not collaborators."
+outcome: "Status: complete — PTFS runs on a bootable, modified xv6 image."
+---
+
+## Problem
+
+You don't understand a filesystem by using one. You understand it by *writing* one — by meeting the block layer, inodes and path resolution face to face, on an operating system small enough to hold in your head.
+
+## Motivation
+
+MIT's xv6 is the direct way in: a real, running Unix-like kernel with nothing hidden. The project modifies its filesystem in a way that is genuinely its own, not a tutorial's.
+
+## Architecture
+
+[[diagram]]
+ptfs
+
+## Technical decisions
+
+- Built **on xv6 rather than a toy simulation** — a real boot, a real disk image, a real constraint: if it corrupts the superblock, nothing boots.
+- Priority tags as **first-class file metadata**, so retrieval can respect importance rather than only directory position.
+
+## Engineering challenges
+
+Reading a C kernel codebase with no safety net; understanding the on-disk layout well enough to extend it without breaking the boot path; debugging with print statements in a world without a debugger worth the name.
+
+## Personal contribution
+
+Collaborator: **madhav-kartikeya** (25 commits). My part: [to be filled].
+
+## Outcome
+
+**Complete** — PTFS runs on a bootable, modified xv6 image.
+
+## Lessons learned
+
+Systems programming is mostly reading. The abstraction "file" is a treaty between eleven layers of code — you only see the treaty when you renegotiate it.

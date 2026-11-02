@@ -1,0 +1,24 @@
+---
+title: "Computational Research & Reproducibility"
+slug: "reproducibility"
+index: "R.03"
+status: "active"
+concepts: ["Provenance", "Content-addressed caching", "Run records", "Reproduction checks", "Environment capture"]
+repos: [{ label: "NeuroWeave — graph-native research platform", href: "https://github.com/j4b3-21/neuroweave" }]
+---
+
+## What I'm exploring
+
+How to make computational experiments trustworthy by default — provenance that captures the full context of a run, caching that makes verification cheaper than re-running, and checks that can tell when a "reproduction" isn't one.
+
+## Why it interests me
+
+Reproducibility is usually framed as a virtue; it is actually an engineering problem with an engineering answer. That reframing became **NeuroWeave** (started May 2026): a graph kernel, run records with code hashes, seeds and environments, an artifact store, run comparison and reproduction checks.
+
+## Concepts I'm studying
+
+Provenance — what metadata makes a run replayable; content-addressed caching — what *deserves* to invalidate a cache; run records as queryable history; reproduction checks — what "the same result" even means.
+
+## Code
+
+NeuroWeave is the running experiment: record a run, perturb a parameter, verify the cache fires exactly where it should — and nowhere else.

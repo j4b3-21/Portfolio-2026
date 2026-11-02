@@ -1,0 +1,55 @@
+---
+title: "BM4A"
+slug: "bm4a"
+tagline: "A reusable, project-agnostic foundation for metadata-driven, multi-tenant business applications — build CRMs and ERPs by configuration, not by rewriting backends."
+year: "Aug 2026 →"
+status: active
+featured: true
+role: "Platform designer & builder"
+stack: ["Spring Boot", "PostgreSQL 18", "Keycloak 26.3", "OpenFGA v1.22", "Redis 8", "Docker"]
+repo: "https://github.com/j4b3-21/BM4A"
+og: null
+cover: "bm4a"
+contribution: "Designed and built by me, with AI-assisted tooling; built alongside CampusHire."
+outcome: "First milestone complete — a secure, runnable, tested platform slice, verified by a 28-check end-to-end smoke suite and Testcontainers integration tests."
+---
+
+## Problem
+
+Every business application rebuilds the same skeleton: organizations, users, roles, configurable fields, records, permissions, audit. CRM, ERP, HRMS, placement systems, school and hospital software — the domain changes, the skeleton doesn't.
+
+## Motivation
+
+An application should be **configured through the API** — modules, fields, relationships, permissions — not hand-rolled backend by backend. BM4A is that foundation; CampusHire, the placement platform built alongside it, follows the same metadata-driven architecture.
+
+## Architecture
+
+[[diagram]]
+bm4a
+
+A Spring Boot modular monolith with module boundaries verified by Spring Modulith.
+
+## Technical decisions
+
+- **Relationship-based authorization** via an OpenFGA adapter; tuples synchronized through a transactional outbox; the system **fails closed (503)** when OpenFGA is unavailable.
+- **Internal users keyed by (issuer, subject)** — JWTs validated for signature, issuer, audience and expiry, never blindly trusted.
+- **Metadata engine**: tenant and platform-global modules, 17 field types, validation rules, layouts, definition versions and safe schema evolution.
+- **Record engine**: one generic CRUD API, JSONB storage with canonical values, optimistic concurrency, history, soft delete/restore/revert.
+- **Append-only audit enforced by the database itself** — application bugs can bend the story; the schema can't.
+- **Redis-backed rate limiting of writes**, health probes, metrics, structured production logs, Docker, CI.
+
+## Engineering challenges
+
+Safe schema evolution when definitions are data, delete semantics across relationship graphs (restrict vs. detach), and making tenant context impossible to forget server-side.
+
+## Personal contribution
+
+Designed and built by me, with AI-assisted tooling; built alongside CampusHire.
+
+## Outcome
+
+**First milestone complete** — a secure, runnable, tested platform slice: identity, tenancy, authorization, metadata, records, relationships, audit and operations, verified by a 28-check end-to-end smoke suite plus unit and Testcontainers integration tests in CI. The public roadmap tracks what's next.
+
+## Lessons learned
+
+Building the platform first teaches you what the app-first path would have taught slowly: tests are the spec, and authorization is a data model.

@@ -1,0 +1,52 @@
+---
+title: "OFFLINE"
+slug: "offline"
+tagline: "An offline-first AI walking companion whose success is measured by how little you need it."
+year: "Oct 2026"
+status: active
+featured: false
+role: "Designer & builder"
+stack: ["React Native", "Expo", "SQLite", "GPS", "On-device TTS", "TinyLlama (optional)"]
+repo: "https://github.com/j4b3-21/OFFLINE"
+og: null
+cover: "offline"
+contribution: "Designed and built by me, with AI-assisted tooling."
+outcome: "In development — the full pre-walk → walk → report loop runs on a device; the iOS simulator build is verified; physical-device GPS/TTS checks are human-in-the-loop."
+---
+
+## Problem
+
+Most "wellness" apps are engagement machines: notifications, streaks, scores — attention-economy products wearing a health mask. A walk is the one activity they refuse to leave alone.
+
+## Motivation
+
+The design thesis, stated in the repository: **an AI whose success is measured by how little you need it.** OFFLINE prepares a short route locally, gives occasional spoken cues, and then gets out of the way.
+
+## Architecture
+
+[[diagram]]
+offline
+
+## Technical decisions
+
+- **Everything on-device.** SQLite for history, GPS for the loop, device text-to-speech for cues. No account, no cloud, no signal required to start a prepared experience — hence the name.
+- **Deterministic by default.** The Mock planner is a fully offline, deterministic planner built on real inputs (duration, seed, mode, start location). The on-device TinyLlama path exists but stays optional behind the LocalModel boundary.
+- **Three modes, not settings pages.** *Quiet*, *Curious*, or *Explore new area* — the interface is a decision, not a configuration panel.
+- **Restraint as a feature.** Cues and haptics fire only at meaningful moments; planned landmarks replace ambient cues at most once each.
+- **Story reports, not scores.** The report measures things like uninterrupted time and digital intrusion — explicitly OFFLINE-defined experimental metrics, not clinical claims.
+
+## Engineering challenges
+
+Designing for *absence* is harder than designing for presence: throttling cues so they help rather than nag, and route planning that produces a good loop from a single time budget.
+
+## Personal contribution
+
+Designed and built by me, with AI-assisted tooling.
+
+## Outcome
+
+**In development** — the full pre-walk → walk → report loop runs on a device; the iOS simulator build is verified; physical-device GPS/TTS/haptics checks are still human-in-the-loop. A behavioral research prototype, not a medical product.
+
+## Lessons learned
+
+Constraints are the design: "offline" and "minimal" weren't limitations imposed on this project — they were the project.

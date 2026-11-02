@@ -1,0 +1,157 @@
+{
+  "project_overview": {
+    "title": "The Archive — Bhuvan M. Acharya",
+    "sub_title": "Interactive Editorial Personal Portfolio & Digital Identity",
+    "author": "Bhuvan M. Acharya",
+    "institution": "IIIT Tiruchirappalli (Class of 2028)",
+    "context": "Wispr Flow Challenge 2026",
+    "design_archetype": "Swiss Editorial Minimalism × Futuristic Digital Architecture × Creative Brutalism",
+    "app_type": "portfolio"
+  },
+  "theme_system": {
+    "light_theme_default": {
+      "background": "#F1EEE7",
+      "text": "#25251F",
+      "accent": "#536BFA",
+      "stone": "#B9B5AA",
+      "sage": "#82968A",
+      "border": "rgba(37, 37, 31, 0.12)",
+      "card_bg": "#FAF8F5"
+    },
+    "dark_immersive_theme": {
+      "used_for": ["Selected Project Case Studies (/work/[slug])", "Research & Exploration Section & Page (/research)"],
+      "background": "#111318",
+      "surface": "#1B202A",
+      "text": "#DCDDD9",
+      "accent": "#7189FF",
+      "border": "rgba(220, 221, 217, 0.12)",
+      "card_bg": "#181C26"
+    }
+  },
+  "typography": {
+    "headline_font": "Instrument Serif, Georgia, serif",
+    "interface_body_font": "Geist Sans, -apple-system, BlinkMacSystemFont, sans-serif",
+    "metadata_code_font": "Geist Mono, monospace",
+    "google_fonts_embed": "https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=Geist:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap",
+    "hierarchy_rules": {
+      "h1_hero": "text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.05] tracking-tight font-serif",
+      "h2_section": "text-2xl sm:text-3xl lg:text-4xl font-normal leading-[1.15] font-serif",
+      "h3_card": "text-xl sm:text-2xl font-medium tracking-tight font-sans",
+      "h4_sub": "text-lg font-medium tracking-normal font-sans",
+      "body_text": "text-base leading-relaxed text-[#25251F]/80 font-sans",
+      "metadata_label": "text-xs font-mono uppercase tracking-[0.2em] text-[#B9B5AA]"
+    },
+    "forbidden_fonts": ["Inter for headings", "Space Grotesk"]
+  },
+  "layout_and_grid": {
+    "base_grid": "12-column Swiss editorial grid (grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8)",
+    "container_padding": "px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto",
+    "section_spacing": "py-20 md:py-32",
+    "borders": "1px hairline borders (border-[#25251F]/10 in light mode, border-[#DCDDD9]/10 in dark mode)",
+    "anti_patterns": [
+      "No heavy purple gradients (#7351B7)",
+      "No muddy glassmorphism on text areas",
+      "No generic tech-badge wall lists",
+      "No stock photography decorations without story context",
+      "No centered paragraph walls",
+      "No text-7xl to text-9xl headings (ceiling is text-6xl)"
+    ]
+  },
+  "threejs_orbital_sculpture": {
+    "component_name": "OrbitalSculpture",
+    "description": "Interactive 3D geometry featuring concentric orbital rings with real-time mouse parallax, scroll-linked rotation speed, and dynamic light reflections",
+    "tech_stack": "@react-three/fiber, @react-three/drei, three, framer-motion",
+    "fallback": "Clean vector SVG orbital diagram rendered seamlessly when window.matchMedia('(prefers-reduced-motion: reduce)') is active",
+    "lighting": "Dual directional lights + subtle ambient light to keep metallic/matte geometric surfaces rich and visible"
+  },
+  "routes": [
+    {
+      "path": "/",
+      "name": "Home Archive",
+      "sections": [
+        "Floating Nav Header",
+        "Section A: Hero with 3D Orbital Sculpture & Headline 'Building things. Exploring ideas.'",
+        "Section B: Three Dimensions (ENGINEER, EXPLORER, FOUNDER)",
+        "Section C: Selected Work (Large editorial preview cards)",
+        "Section D: Engineering Capabilities (4 functional categories)",
+        "Section E: Research & Exploration (Dark Immersive block)",
+        "Section F: Leadership & Community (3 distinctive stories)",
+        "Section G: The Journal — A life in progress (Chronological timeline)",
+        "Section H: Contact & Footprint"
+      ]
+    },
+    {
+      "path": "/work",
+      "name": "Selected Work Index",
+      "description": "Full archive of engineering projects, hardware builds, and software systems with filtering by domain"
+    },
+    {
+      "path": "/work/:slug",
+      "name": "Project Case Study Detail",
+      "description": "Dark immersive single project viewer featuring problem breakdown, system architecture diagrams, live demos, and technical outcomes"
+    },
+    {
+      "path": "/journey",
+      "name": "The Journal & Journey",
+      "description": "Chronological interactive expandable timeline from 2024 to 2028, filterable by tag and category"
+    },
+    {
+      "path": "/journey/:slug",
+      "name": "Journal Article Reader",
+      "description": "MDX-style editorial reading view for longform essays and technical notes"
+    },
+    {
+      "path": "/research",
+      "name": "Research & Exploration",
+      "description": "Dark background research laboratory featuring papers, benchmarks, computational experiments, and code repos"
+    },
+    {
+      "path": "/about",
+      "name": "About & Philosophy",
+      "description": "Detailed editorial bio, personal philosophy, IIIT Tiruchirappalli course background, software stack, and studio equipment"
+    },
+    {
+      "path": "/contact",
+      "name": "Contact & Signal",
+      "description": "Interactive editorial contact portal with copy-to-clipboard email, message form, and social signals"
+    },
+    {
+      "path": "/resume",
+      "name": "Curriculum Vitae",
+      "description": "Clean printable/exportable interactive resume with structured work experience, education, publications, and awards"
+    }
+  ],
+  "image_urls": {
+    "hero_sculpture_preview": "https://images.pexels.com/photos/19216762/pexels-photo-19216762.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "architectural_texture": "https://images.pexels.com/photos/29404047/pexels-photo-29404047.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "workspace_lab": "https://images.unsplash.com/photo-1763833294545-e38e4fab1961?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHw0fHxlZGl0b3JpYWwlMjBhcmNoaXRlY3R1cmUlMjBzY3VscHR1cmUlMjB0ZWNobm9sb2d5JTIwd29ya3NwYWNlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkzNDM1MDk5fDA&ixlib=rb-4.1.0&q=85",
+    "control_room": "https://images.unsplash.com/photo-1764195287345-2086f504cb0b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwzfHxlZGl0b3JpYWwlMjBhcmNoaXRlY3R1cmUlMjBzY3VscHR1cmUlMjB0ZWNobm9sb2d5JTIwd29ya3NwYWNlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkzNDM1MDk5fDA&ixlib=rb-4.1.0&q=85",
+    "electronics_hardware": "https://images.unsplash.com/photo-1777153184385-cff867582a1c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwxfHxlZGl0b3JpYWwlMjBhcmNoaXRlY3R1cmUlMjBzY3VscHR1cmUlMjB0ZWNobm9sb2d5JTIwd29ya3NwYWNlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkzNDM1MDk5fDA&ixlib=rb-4.1.0&q=85",
+    "person_working": "https://images.unsplash.com/photo-1773332585698-cba3c91b73e4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwyfHxlZGl0b3JpYWwlMjBhcmNoaXRlY3R1cmUlMjBzY3VscHR1cmUlMjB0ZWNobm9sb2d5JTIwd29ya3NwYWNlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkzNDM1MDk5fDA&ixlib=rb-4.1.0&q=85"
+  },
+  "testing_and_accessibility": {
+    "data_testid_policy": "MANDATORY. Every interactive element (navigation links, filter buttons, project cards, accordion toggles, contact inputs, theme switches) MUST include a unique data-testid attribute in kebab-case format.",
+    "sample_test_ids": [
+      "data-testid='nav-link-work'",
+      "data-testid='nav-link-journey'",
+      "data-testid='nav-link-research'",
+      "data-testid='nav-link-about'",
+      "data-testid='nav-link-contact'",
+      "data-testid='hero-orbital-sculpture'",
+      "data-testid='dimension-badge-engineer'",
+      "data-testid='project-card-flow-ai'",
+      "data-testid='journal-expand-2026'",
+      "data-testid='contact-submit-button'",
+      "data-testid='resume-download-button'"
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Install and configure font families ('Instrument Serif', 'Geist', 'Geist Mono') via index.html font head tag or Tailwind font family extension.",
+    "Use light background #F1EEE7 as default for the main page, and dark background #111318 specifically for case studies and the research laboratory section.",
+    "Do NOT center-align the main application container (.App text-align center is banned). Use clean asymmetric 12-column Swiss grids.",
+    "Use Framer Motion for scroll reveals, micro-interactions, page route transitions, and timeline expansion.",
+    "Provide a robust 3D orbital sculpture using Three.js/R3F with fallback vector graphics for reduced motion.",
+    "Ensure sonner is used for toast notifications (e.g., when copying email to clipboard).",
+    "Ensure all components use .js / .jsx format matching the React CRA setup in the app."
+  ]
+}

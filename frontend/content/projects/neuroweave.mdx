@@ -1,0 +1,54 @@
+---
+title: "NeuroWeave"
+slug: "neuroweave"
+tagline: "A graph-native platform for reproducible computational research — every run recorded, every output reusable."
+year: "May 2026 →"
+status: active
+featured: true
+role: "Designer & builder"
+stack: ["Python", "Typed workflow graphs", "Content-addressed caching", "HTTP API", "React Studio"]
+repo: "https://github.com/j4b3-21/neuroweave"
+og: "https://raw.githubusercontent.com/j4b3-21/neuroweave/main/docs/images/studio-editor.png"
+imageCaption: "NeuroWeave Studio — repository screenshot"
+cover: "screenshot"
+contribution: "Designed and built by me, with AI-assisted tooling."
+outcome: "Early but working (v0.2.0) — the graph kernel, local runtime, artifact store, provenance, caching, run comparison, reproduction checks, CLI, HTTP API and Studio are implemented and tested. Install from source — not on PyPI."
+---
+
+## Problem
+
+Computational research has a quiet reliability problem. An analysis lives as a folder of scripts, a set of parameters scattered across files, an environment nobody wrote down — and weeks later, the answer to "which code produced this plot?" is nobody knows.
+
+## Motivation
+
+Existing tooling sits at two extremes: platforms that want to own the whole workflow, and notebooks that record almost nothing. NeuroWeave takes the middle path — a local tool that records everything about a run without asking anyone to change how they work.
+
+## Architecture
+
+[[diagram]]
+neuroweave
+
+You write analysis steps as ordinary Python functions, connect them into a typed workflow graph (in code or in the visual Studio), and every run is recorded: the exact graph that executed, each node's code hash, parameters, seed, inputs, outputs, logs, metrics and the software environment. Runs can be compared, re-executed and checked for byte-identical reproduction.
+
+## Technical decisions
+
+- **Local-first, single-user, single-machine.** Deliberately no sandboxing, no cloud, no accounts — documented and fenced with a trust model instead of pretending otherwise.
+- **Content-addressed output caching.** Each node's cache key comes from its code hash, parameters, seed and inputs. A rerun reuses any node whose inputs haven't changed — reproducibility that *saves* compute on long-running research work.
+- **Run records as first-class artifacts.** Run comparison and reproduction checks become queries over history rather than hopes.
+- **A real interface, not just a CLI.** The Studio (React) edits the same workflow files and reads the same run records over the HTTP API.
+
+## Engineering challenges
+
+Meaningful code hashing (when does a change *deserve* to invalidate the cache?), cache invalidation that errs toward correctness, and keeping the artifact store inspectable by hand.
+
+## Personal contribution
+
+Designed and built by me, with AI-assisted tooling. Open source.
+
+## Outcome
+
+**Early but working (v0.2.0)** — the graph kernel, local runtime, artifact store, provenance, caching, run comparison, reproduction checks, CLI, HTTP API and Studio are implemented and tested (Python tests, Studio Vitest suite, Playwright browser tests in CI). Installed from source; not published on PyPI.
+
+## Lessons learned
+
+Reproducibility is less a feature than a discipline enforced by defaults — the hard part is making the recording trustworthy enough to stop keeping notes in your head.

@@ -1,0 +1,26 @@
+---
+title: "Why reproducibility deserves better tooling"
+date: "2025-10-12"
+category: "Technical article"
+type: "article"
+year: 2025
+featured: false
+status: "draft"
+tags: ["Reproducibility", "Research tooling", "Python"]
+related: ["neuroweave"]
+links: []
+---
+
+*Draft — [personal story slot: the moment this problem became concrete — to be written in your words].*
+
+Three observations from working notes:
+
+1. **The unit of trust is the run, not the notebook.** What you need to reproduce work is the exact graph of steps, each node's code hash, parameters, seed, inputs and environment. Notebooks capture almost none of it by default.
+
+2. **Reproducibility tooling fails when it demands a workflow change.** The reason people still email themselves zip files is that serious platforms ask them to move house. Local-first, graph-native, ordinary Python functions as nodes — adoption has to cost nothing.
+
+3. **Caching is the reward, not the feature.** Content-addressed outputs mean a rerun skips every node whose inputs didn't change. Reproducibility, done right, *saves* compute instead of costing it.
+
+These notes later became **NeuroWeave** (work started May 2026): a graph kernel, run records, artifact store, reproduction checks — and a Studio UI so it isn't just a pile of flags.
+
+[Your closing reflection — to be written.]

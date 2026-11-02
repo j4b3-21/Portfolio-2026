@@ -1,0 +1,58 @@
+---
+title: "Atrang"
+slug: "atrang"
+tagline: "Full-stack management system for Atrang, IIIT Tiruchirappalli's technical fest — with a Three.js 3D world as the front door."
+year: "2026 – 27"
+status: active
+featured: false
+role: "Team of 4 — DBMS Lab (24CS305 / CS3106) — my part: [to be filled]"
+stack: ["Next.js", "Three.js / React Three Fiber", "Java 21", "Spring Boot 3.3.4", "PostgreSQL", "Flyway V1–V9", "Docker"]
+repo: "https://github.com/j4b3-21/atrang"
+demo: "https://atrang.vercel.app"
+demoLabel: "Project demo"
+og: null
+cover: "atrang"
+contribution: "Team of 4 — Yogesh (database architect), Shreyash (backend), Madhav (admin frontend), and me: [my part — to be filled]."
+outcome: "In development — five 3NF tables with analytical views, audit triggers and a stored function behind the Spring Boot API; the project demo is deployed."
+---
+
+## Problem
+
+A technical fest is a firehose of events, schedules, venues and people — usually managed through a tangle of Google Forms and a pinned message. Participants can't see what's happening; organizers can't manage what they can't see.
+
+## Motivation
+
+Atrang is the institute's technical fest, and it deserved infrastructure as interesting as the events themselves — the fest treated as a *world*, not a form list. Built as the extended full-stack DBMS architecture project for the Database Management Systems Laboratory (24CS305 / CS3106).
+
+## Architecture
+
+[[diagram]]
+atrang
+
+## Technical decisions
+
+- **A 3D world as navigation** — the fest rendered as an explorable space (Three.js / React Three Fiber); the public showcase lives at `/events`.
+- **Session-cookie authentication**: same-site HttpOnly session cookie (`ATRANG_SESSION_ID`), passwords stored as BCrypt hashes (cost 10) — never plaintext.
+- **Flyway migrations V1–V9**: five 3NF relational tables with NOT NULL / UNIQUE / CHECK constraints, foreign keys with explicit delete rules.
+- **Database doing real work**: analytical views (`v_event_details`, `v_category_metrics`), an automated audit trigger (`trg_events_audit_log`), and a stored function (`fn_get_fest_stats()`) for system-wide metrics in one query.
+
+## Team & ownership
+
+A four-person team, built on contributor branches integrated through `main`:
+
+- **Yogesh** — database architect: Flyway migrations (V1–V9), the DDL schema, views and functions, the DBMS project report.
+- **Shreyash** — backend engineer: Java 21, Spring Boot 3.3.4, Spring Security, REST APIs and DTOs, JPA entities, unit and security tests.
+- **Madhav** — frontend engineer: the Next.js admin panel (`/admin` pages), auth context, API client.
+- **Me** — [my role on the `main` integration branch to be filled: full-stack integration, docker-compose support, unified build verification and end-to-end testing].
+
+## Personal contribution
+
+Team of 4 — my part: [to be filled].
+
+## Outcome
+
+**In development** — five 3NF tables with analytical views, an automated audit trigger and a stored function behind the Spring Boot API. The **project demo** is deployed and running.
+
+## Lessons learned
+
+An event system is mostly an approval workflow wearing a party hat. And integration — making four people's branches into one verified build — is its own engineering discipline.
