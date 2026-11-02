@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import fs from "node:fs";
+import path from "node:path";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
@@ -15,6 +18,11 @@ export const metadata: Metadata = {
 
 const IS_DEV = process.env.NODE_ENV === "development";
 const FIGURING_OUT: string[] = [];
+const PORTRAIT_SRC = "/images/bhuvan.jpeg";
+const HAS_PORTRAIT = [
+    path.join(process.cwd(), "public", "images", "bhuvan.jpeg"),
+    path.join(process.cwd(), "frontend", "public", "images", "bhuvan.jpeg"),
+].some((file) => fs.existsSync(file));
 
 export default function About() {
     const leadership = getLeadership();
@@ -30,10 +38,21 @@ export default function About() {
 
                 <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-12">
                     <div className="lg:col-span-7 max-w-2xl">
-                        {IS_DEV ? (
+                        {HAS_PORTRAIT ? (
+                            <div className="mb-10 slot-frame aspect-[4/5] max-w-[280px] overflow-hidden border-solid" data-testid="portrait">
+                                <Image
+                                    src={PORTRAIT_SRC}
+                                    alt="Portrait of Bhuvan M. Acharya"
+                                    width={560}
+                                    height={700}
+                                    className="h-full w-full object-cover object-center grayscale-[20%]"
+                                    priority
+                                />
+                            </div>
+                        ) : IS_DEV ? (
                             <div className="mb-10 slot-frame aspect-[4/5] max-w-[280px] flex items-center justify-center" data-testid="portrait-slot">
                                 <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink/75 px-6 text-center">
-                                    Portrait slot — /images/bhuvan.jpg
+                                    Portrait slot — /images/bhuvan.jpeg
                                 </p>
                             </div>
                         ) : null}

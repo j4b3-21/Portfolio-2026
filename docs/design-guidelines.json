@@ -1,11 +1,11 @@
 {
   "project_overview": {
-    "title": "The Archive — Bhuvan M. Acharya",
+    "title": "The Archive \u2014 Bhuvan M. Acharya",
     "sub_title": "Interactive Editorial Personal Portfolio & Digital Identity",
     "author": "Bhuvan M. Acharya",
     "institution": "IIIT Tiruchirappalli (Class of 2028)",
     "context": "Wispr Flow Challenge 2026",
-    "design_archetype": "Swiss Editorial Minimalism × Futuristic Digital Architecture × Creative Brutalism",
+    "design_archetype": "Swiss Editorial Minimalism \u00d7 Futuristic Digital Architecture \u00d7 Creative Brutalism",
     "app_type": "portfolio"
   },
   "theme_system": {
@@ -19,7 +19,10 @@
       "card_bg": "#FAF8F5"
     },
     "dark_immersive_theme": {
-      "used_for": ["Selected Project Case Studies (/work/[slug])", "Research & Exploration Section & Page (/research)"],
+      "used_for": [
+        "Selected Project Case Studies (/work/[slug])",
+        "Research & Exploration Section & Page (/research)"
+      ],
       "background": "#111318",
       "surface": "#1B202A",
       "text": "#DCDDD9",
@@ -41,7 +44,10 @@
       "body_text": "text-base leading-relaxed text-[#25251F]/80 font-sans",
       "metadata_label": "text-xs font-mono uppercase tracking-[0.2em] text-[#B9B5AA]"
     },
-    "forbidden_fonts": ["Inter for headings", "Space Grotesk"]
+    "forbidden_fonts": [
+      "Inter for headings",
+      "Space Grotesk"
+    ]
   },
   "layout_and_grid": {
     "base_grid": "12-column Swiss editorial grid (grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8)",
@@ -76,7 +82,7 @@
         "Section D: Engineering Capabilities (4 functional categories)",
         "Section E: Research & Exploration (Dark Immersive block)",
         "Section F: Leadership & Community (3 distinctive stories)",
-        "Section G: The Journal — A life in progress (Chronological timeline)",
+        "Section G: The Journal \u2014 A life in progress (Chronological timeline)",
         "Section H: Contact & Footprint"
       ]
     },
@@ -121,14 +127,6 @@
       "description": "Clean printable/exportable interactive resume with structured work experience, education, publications, and awards"
     }
   ],
-  "image_urls": {
-    "hero_sculpture_preview": "https://images.pexels.com/photos/19216762/pexels-photo-19216762.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    "architectural_texture": "https://images.pexels.com/photos/29404047/pexels-photo-29404047.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    "workspace_lab": "https://images.unsplash.com/photo-1763833294545-e38e4fab1961?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHw0fHxlZGl0b3JpYWwlMjBhcmNoaXRlY3R1cmUlMjBzY3VscHR1cmUlMjB0ZWNobm9sb2d5JTIwd29ya3NwYWNlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkzNDM1MDk5fDA&ixlib=rb-4.1.0&q=85",
-    "control_room": "https://images.unsplash.com/photo-1764195287345-2086f504cb0b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwzfHxlZGl0b3JpYWwlMjBhcmNoaXRlY3R1cmUlMjBzY3VscHR1cmUlMjB0ZWNobm9sb2d5JTIwd29ya3NwYWNlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkzNDM1MDk5fDA&ixlib=rb-4.1.0&q=85",
-    "electronics_hardware": "https://images.unsplash.com/photo-1777153184385-cff867582a1c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwxfHxlZGl0b3JpYWwlMjBhcmNoaXRlY3R1cmUlMjBzY3VscHR1cmUlMjB0ZWNobm9sb2d5JTIwd29ya3NwYWNlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkzNDM1MDk5fDA&ixlib=rb-4.1.0&q=85",
-    "person_working": "https://images.unsplash.com/photo-1773332585698-cba3c91b73e4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwyfHxlZGl0b3JpYWwlMjBhcmNoaXRlY3R1cmUlMjBzY3VscHR1cmUlMjB0ZWNobm9sb2d5JTIwd29ya3NwYWNlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkzNDM1MDk5fDA&ixlib=rb-4.1.0&q=85"
-  },
   "testing_and_accessibility": {
     "data_testid_policy": "MANDATORY. Every interactive element (navigation links, filter buttons, project cards, accordion toggles, contact inputs, theme switches) MUST include a unique data-testid attribute in kebab-case format.",
     "sample_test_ids": [
@@ -146,12 +144,9 @@
     ]
   },
   "instructions_to_main_agent": [
-    "Install and configure font families ('Instrument Serif', 'Geist', 'Geist Mono') via index.html font head tag or Tailwind font family extension.",
     "Use light background #F1EEE7 as default for the main page, and dark background #111318 specifically for case studies and the research laboratory section.",
     "Do NOT center-align the main application container (.App text-align center is banned). Use clean asymmetric 12-column Swiss grids.",
     "Use Framer Motion for scroll reveals, micro-interactions, page route transitions, and timeline expansion.",
-    "Provide a robust 3D orbital sculpture using Three.js/R3F with fallback vector graphics for reduced motion.",
-    "Ensure sonner is used for toast notifications (e.g., when copying email to clipboard).",
-    "Ensure all components use .js / .jsx format matching the React CRA setup in the app."
+    "Provide a robust 3D orbital sculpture using Three.js/R3F with fallback vector graphics for reduced motion."
   ]
 }
