@@ -20,14 +20,15 @@ export default function Hero() {
         <section className="relative bg-cols overflow-hidden" data-testid="hero-section" aria-label="Introduction">
             <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-28 sm:pt-32 lg:pt-36 pb-14 lg:pb-16 min-h-[92svh] flex flex-col">
                 <div className="relative flex-1 flex flex-col items-start lg:flex-row lg:items-center">
-                    <motion.p
-                        initial={false}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.1, ease: [...EASE] }}
-                        className="hero-enter font-mono text-[11px] uppercase tracking-[0.18em] text-ink/75"
-                    >
-                        Software Engineering · Research · IIIT Tiruchirappalli '28                    </motion.p>
-                    <div className="relative z-10 max-w-full lg:max-w-[60%]">
+                    <div className="relative z-10 max-w-full lg:max-w-[58%]">
+                        <motion.p
+                            initial={false}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 0.1, ease: [...EASE] }}
+                            className="hero-enter font-mono text-[11px] uppercase tracking-[0.18em] text-ink/75"
+                        >
+                            Software Engineering · Research · IIIT Tiruchirappalli '28
+                        </motion.p>
 
                         <MaskedLines
                             as="h1"
@@ -75,7 +76,7 @@ export default function Hero() {
                     </div>
 
                     <div
-                        className="relative mt-12 w-[80%] max-w-[360px] mx-auto lg:mt-0 lg:absolute lg:right-[-6%] lg:top-1/2 lg:-translate-y-1/2 lg:w-[48%] lg:max-w-none aspect-square"
+                        className="relative mt-12 w-[80%] max-w-[360px] mx-auto lg:mt-0 lg:absolute lg:right-[-2%] lg:top-1/2 lg:-translate-y-1/2 lg:w-[44%] lg:max-w-none aspect-square"
                     >
                         <Sculpture className="absolute inset-0" />
                     </div>
