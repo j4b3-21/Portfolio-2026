@@ -7,7 +7,7 @@ import JournalTimeline from "@/components/JournalTimeline";
 import { Reveal, SectionHead } from "@/components/Reveal";
 import Markdown from "@/components/Markdown";
 import CopyButton from "@/components/CopyButton";
-import { getProjects, getJournal, getLeadership, groupByYear } from "@/lib/content";
+import { getProjects, getJournal, getLeadership, IS_DEV } from "@/lib/content";
 import { PROFILE, DIMENSIONS, CAPABILITIES, RESEARCH_AREAS, JOURNAL_YEARS, CHANNELS, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -25,6 +25,8 @@ const personJsonLd = {
     affiliation: { "@type": "CollegeOrUniversity", name: PROFILE.institution },
     url: absoluteUrl("/"),
     sameAs: [PROFILE.github, PROFILE.linkedin],
+    jobTitle: "Software engineer (student)",
+    alumniOf: { "@type": "CollegeOrUniversity", name: PROFILE.institution },
 };
 
 export default function Home() {
@@ -32,7 +34,6 @@ export default function Home() {
     const journal = getJournal();
     const leadership = getLeadership();
     const featured = projects.filter((p) => p.featured).slice(0, 3);
-    const groups = groupByYear(journal, JOURNAL_YEARS);
 
     return (
         <>
@@ -55,7 +56,7 @@ export default function Home() {
                                     className="group grid grid-cols-12 gap-4 items-baseline hairline-t py-7 sm:py-9 transition-colors duration-300 hover:bg-[#ECE9E0]"
                                 >
                                     <span className="col-span-2 sm:col-span-1 font-mono text-[11px] text-ink/75 pl-1 sm:pl-2">{d.index}</span>
-                                    <span className="col-span-10 sm:col-span-3 font-mono text-[11px] uppercase tracking-[0.25em] text-electric">{d.label}</span>
+                                    <span className="col-span-10 sm:col-span-3 font-mono text-[11px] uppercase tracking-[0.18em] text-electric">{d.label}</span>
                                     <p className="col-span-12 sm:col-span-7 text-[15px] sm:text-lg leading-relaxed text-ink/85 transition-transform duration-500 group-hover:translate-x-1">
                                         {d.text}
                                     </p>
@@ -76,7 +77,7 @@ export default function Home() {
                             </Reveal>
                         </div>
                         <Reveal delay={0.08}>
-                            <Link href="/work" data-testid="work-view-all" className="link-sweep font-mono text-[10px] uppercase tracking-[0.22em]">
+                            <Link href="/work" data-testid="work-view-all" className="link-sweep font-mono text-[11px] uppercase tracking-[0.22em]">
                                 View the full archive
                             </Link>
                         </Reveal>
@@ -99,13 +100,7 @@ export default function Home() {
                             </Reveal>
                         </div>
                         <Reveal delay={0.08}>
-                            <div className="flex items-center gap-6 font-mono text-[10px] uppercase tracking-[0.18em] text-ink/80">
-                                <span className="flex items-center gap-2">
-                                    <span className="w-[7px] h-[7px] bg-ink" /> Shipped with
-                                </span>
-                                <span className="flex items-center gap-2">
-                                    <span className="w-[7px] h-[7px] border border-ink/70" /> Exploring
-                                </span>
+                            <div className="flex items-center gap-6 font-mono text-[11px] uppercase tracking-[0.18em] text-ink/80">
                             </div>
                         </Reveal>
                     </div>
@@ -114,31 +109,27 @@ export default function Home() {
                         {CAPABILITIES.map((g, gi) => (
                             <Reveal key={g.id} delay={gi * 0.05} className="bg-paper">
                                 <div data-testid={`capability-group-${g.id}`} className="p-7 h-full">
-                                    <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink/75 pb-4 border-b border-ink/10">
-                                        {g.label}
+                                    <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink/75 pb-4 border-b border-ink/10">
+                                        {g.id === "emerging" ? "EXPLORING" : g.label}
                                     </p>
                                     <ul className="mt-5 space-y-3.5">
                                         {g.items.map((it) => (
                                             <li key={it.name} className="text-[15px] text-ink/90">
                                                 <span className="flex items-center gap-3">
-                                                    {it.status === "shipped" ? (
-                                                        <span className="inline-block w-[7px] h-[7px] bg-ink shrink-0" aria-label="Shipped with" />
-                                                    ) : (
-                                                        <span className="inline-block w-[7px] h-[7px] border border-ink/70 shrink-0" aria-label="Exploring" />
-                                                    )}
                                                     {it.name}
                                                 </span>
                                                 {it.projects.length > 0 ? (
-                                                    <span className="block mt-1 ml-[19px] font-mono text-[10px] uppercase tracking-[0.12em] text-ink/70 leading-relaxed">
+                                                    <span className="block mt-1 ml-[19px] font-mono text-[11px] uppercase tracking-[0.12em] text-ink/70 leading-relaxed">
                                                         →{" "}
-                                                        {it.projects.map((slug, i) => (
+                                                        {it.projects.slice(0, 2).map((slug, i) => (
                                                             <span key={slug}>
                                                                 <Link href={`/work/${slug}`} className="hover:text-electric transition-colors">
-                                                                    {slug}
+                                                                    {projects.find((project) => project.slug === slug)?.title ?? slug}
                                                                 </Link>
-                                                                {i < it.projects.length - 1 ? ", " : ""}
+                                                                {i < Math.min(it.projects.length, 2) - 1 ? ", " : ""}
                                                             </span>
                                                         ))}
+                                                        {it.projects.length > 2 ? ` +${it.projects.length - 2}` : ""}
                                                     </span>
                                                 ) : null}
                                             </li>
@@ -163,7 +154,7 @@ export default function Home() {
                         {RESEARCH_AREAS.map((r, i) => (
                             <Reveal key={r.id} delay={i * 0.06}>
                                 <Link
-                                    href="/research"
+                                    href={`/research#${r.id}`}
                                     data-testid={`research-teaser-${r.id}`}
                                     className="group grid grid-cols-12 gap-4 items-baseline border-t border-cream/15 py-7 sm:py-9 transition-colors duration-300 hover:bg-white/[0.03]"
                                 >
@@ -200,7 +191,7 @@ export default function Home() {
                 </div>
             </section>
 
-            <section className="py-20 md:py-28" data-testid="journal-section" aria-label="The journal">
+            {journal.length >= 3 ? <section className="py-20 md:py-28" data-testid="journal-section" aria-label="The journal">
                 <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
                     <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
                         <div>
@@ -210,7 +201,7 @@ export default function Home() {
                             </Reveal>
                         </div>
                         <Reveal delay={0.08}>
-                            <Link href="/journey" data-testid="journal-view-all" className="link-sweep font-mono text-[10px] uppercase tracking-[0.22em]">
+                            <Link href="/journey" data-testid="journal-view-all" className="link-sweep font-mono text-[11px] uppercase tracking-[0.22em]">
                                 Open the journal
                             </Link>
                         </Reveal>
@@ -219,11 +210,11 @@ export default function Home() {
                         <JournalTimeline entries={journal} years={JOURNAL_YEARS} />
                     </Reveal>
                 </div>
-            </section>
+            </section> : null}
 
             <section className="py-20 md:py-28" data-testid="contact-section" aria-label="Contact">
                 <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
-                    <SectionHead index="07" label="Contact" />
+                    <SectionHead index={journal.length >= 3 ? "07" : "06"} label="Contact" />
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mt-8">
                         <div className="lg:col-span-7">
                             <Reveal>
@@ -259,28 +250,26 @@ function LeadershipStory({ entry, index }: { entry: ReturnType<typeof getLeaders
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                         <div className="lg:col-span-7">
                             <div className="flex flex-wrap items-center gap-3">
-                                <span className="font-mono text-[9px] uppercase tracking-[0.22em] bg-ink text-paper px-2.5 py-1.5">{entry.kind}</span>
-                                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink/80">{entry.role}</span>
+                                <span className="font-mono text-[11px] uppercase tracking-[0.22em] bg-ink text-paper px-2.5 py-1.5">{entry.kind}</span>
+                                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink/80">{entry.role}</span>
                             </div>
                             <h3 className="mt-5 font-serif font-normal text-3xl sm:text-4xl leading-tight">{entry.org}</h3>
-                            <div className="mt-6 max-w-xl [&_p]:text-ink/85">
-                                <Markdown body={entry.body} />
-                            </div>
+                            {entry.body ? <div className="mt-6 max-w-xl [&_p]:text-ink/85"><Markdown body={entry.body} /></div> : null}
                         </div>
                         <div className="lg:col-span-5">
                             <ul className="border-t border-ink/15">
                                 {entry.facts.map((f, i) => (
                                     <li key={i} className="flex gap-3 text-[13px] leading-relaxed text-ink/85 py-3 border-b border-ink/10">
-                                        <span className="font-mono text-[10px] text-electric pt-0.5">M{i + 1}</span>
+                                        <span className="font-mono text-[11px] text-electric pt-0.5">M{i + 1}</span>
                                         {f}
                                     </li>
                                 ))}
                             </ul>
-                            <div className="mt-6 slot-frame aspect-[16/10] hidden md:flex items-center justify-center" data-testid={`leadership-photo-slot-${entry.id}`}>
-                                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink/70 px-6 text-center">
+                            {IS_DEV ? <div className="mt-6 slot-frame aspect-[16/10] hidden md:flex items-center justify-center" data-testid={`leadership-photo-slot-${entry.id}`}>
+                                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink/70 px-6 text-center">
                                     Photo slot — /images/quantum-club/ [photographs to be added]
                                 </p>
-                            </div>
+                            </div> : null}
                         </div>
                     </div>
                 </div>
@@ -292,9 +281,9 @@ function LeadershipStory({ entry, index }: { entry: ReturnType<typeof getLeaders
             <Reveal delay={0.06} className="mt-8">
                 <div data-testid={`leadership-${entry.id}`} className="grid grid-cols-1 md:grid-cols-12 border border-ink/15 bg-paper">
                     <div className="md:col-span-5 p-7 sm:p-9 border-b md:border-b-0 md:border-r border-ink/15">
-                        <span className="font-mono text-[9px] uppercase tracking-[0.22em] border border-ink/30 px-2.5 py-1.5 text-ink/85">{entry.kind}</span>
+                        <span className="font-mono text-[11px] uppercase tracking-[0.22em] border border-ink/30 px-2.5 py-1.5 text-ink/85">{entry.kind}</span>
                         <h3 className="mt-5 font-serif font-normal text-2xl sm:text-3xl leading-tight">{entry.org}</h3>
-                        <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-ink/80">{entry.role}</p>
+                        <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-ink/80">{entry.role}</p>
                     </div>
                     <div className="md:col-span-7 p-7 sm:p-9">
                         <ul className="space-y-2.5">
@@ -305,9 +294,7 @@ function LeadershipStory({ entry, index }: { entry: ReturnType<typeof getLeaders
                                 </li>
                             ))}
                         </ul>
-                        <div className="mt-6 [&_p]:text-ink/85">
-                            <Markdown body={entry.body} />
-                        </div>
+                        {entry.body ? <div className="mt-6 [&_p]:text-ink/85"><Markdown body={entry.body} /></div> : null}
                     </div>
                 </div>
             </Reveal>
@@ -317,8 +304,8 @@ function LeadershipStory({ entry, index }: { entry: ReturnType<typeof getLeaders
         <Reveal delay={0.06} className="mt-8">
             <div data-testid={`leadership-${entry.id}`} className="border border-ink/15 bg-paper p-7 sm:p-9">
                 <div className="flex flex-wrap items-center gap-3">
-                    <span className="font-mono text-[9px] uppercase tracking-[0.22em] border border-ink/30 px-2.5 py-1.5 text-ink/85">{entry.kind}</span>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink/80">{entry.role}</span>
+                    <span className="font-mono text-[11px] uppercase tracking-[0.22em] border border-ink/30 px-2.5 py-1.5 text-ink/85">{entry.kind}</span>
+                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink/80">{entry.role}</span>
                 </div>
                 <div className="mt-5 grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
                     <h3 className="md:col-span-4 font-serif font-normal text-2xl leading-tight">{entry.org}</h3>
@@ -330,9 +317,7 @@ function LeadershipStory({ entry, index }: { entry: ReturnType<typeof getLeaders
                             </li>
                         ))}
                     </ul>
-                    <div className="md:col-span-4 [&_p]:text-ink/85">
-                        <Markdown body={entry.body} />
-                    </div>
+                    {entry.body ? <div className="md:col-span-4 [&_p]:text-ink/85"><Markdown body={entry.body} /></div> : null}
                 </div>
             </div>
         </Reveal>
@@ -345,7 +330,7 @@ function ChannelRows() {
             {CHANNELS.map((c) => (
                 <div key={c.id} className="hairline-t" data-testid={`contact-channel-${c.id}`}>
                     <div className="grid grid-cols-12 gap-3 items-baseline py-6 sm:py-7">
-                        <span className="col-span-4 sm:col-span-3 font-mono text-[10px] uppercase tracking-[0.22em] text-ink/75">
+                        <span className="col-span-4 sm:col-span-3 font-mono text-[11px] uppercase tracking-[0.22em] text-ink/75">
                             {c.label}
                         </span>
                         <span className="col-span-6 sm:col-span-7 text-base sm:text-xl font-serif">
@@ -366,7 +351,7 @@ function ChannelRows() {
                             )}
                         </span>
                         <span className="col-span-2 justify-self-end">
-                            {c.internal ? null : <CopyButton value={c.copyValue ?? c.value} label={c.label} />}
+                            {c.id === "email" ? <CopyButton value={c.copyValue ?? c.value} label={c.label} /> : null}
                         </span>
                     </div>
                 </div>

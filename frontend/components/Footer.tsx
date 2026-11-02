@@ -1,15 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { PROFILE, CHANNELS } from "@/lib/site";
+import { PROFILE, CHANNELS, NAV_LINKS } from "@/lib/site";
 import { Mark } from "@/components/Nav";
-
-const NAV = [
-    { to: "/work", label: "Work" },
-    { to: "/journey", label: "Journey" },
-    { to: "/research", label: "Research" },
-    { to: "/about", label: "About" },
-    { to: "/contact", label: "Contact" },
-];
 
 export default function Footer() {
     return (
@@ -27,9 +19,9 @@ export default function Footer() {
                     </div>
 
                     <div className="md:col-span-3">
-                        <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-ink/70 mb-5">Navigate</p>
+                        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink/70 mb-5">Navigate</p>
                         <ul className="space-y-3">
-                            {NAV.map((l) => (
+                            {NAV_LINKS.map((l) => (
                                 <li key={l.to}>
                                     <Link
                                         href={l.to}
@@ -44,7 +36,7 @@ export default function Footer() {
                     </div>
 
                     <div className="md:col-span-3">
-                        <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-ink/70 mb-5">Elsewhere</p>
+                        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink/70 mb-5">Elsewhere</p>
                         <ul className="space-y-3">
                             {CHANNELS.filter((c) => !c.internal).map((c) => (
                                 <li key={c.id}>
@@ -63,9 +55,9 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="mt-14 pt-6 border-t border-ink/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-ink/70">
+                <div className="mt-14 pt-6 border-t border-ink/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-ink/70">
                     <span data-testid="footer-brand">The Archive</span>
-                    <span data-testid="footer-copyright">© 2026 Bhuvan M. Acharya</span>
+                    <span data-testid="footer-copyright">© {new Date().getFullYear()} {PROFILE.name}</span>
                 </div>
             </div>
         </footer>

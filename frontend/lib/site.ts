@@ -26,7 +26,7 @@ export const PROFILE = {
     githubHandle: "@j4b3-21",
     email: "bhuvanm200623@gmail.com",
     linkedin: "https://www.linkedin.com/in/bhuvan-m-acharya-7b9256335/",
-    linkedinLabel: "linkedin.com/in/bhuvan-m-acharya-7b9256335",
+    linkedinLabel: "in/bhuvan-m-acharya",
 };
 
 export type Channel = {
@@ -42,23 +42,21 @@ export const CHANNELS: Channel[] = [
     {
         id: "email",
         label: "Email",
-        value: "bhuvanm200623@gmail.com",
-        href: "mailto:bhuvanm200623@gmail.com",
-        copyValue: "bhuvanm200623@gmail.com",
+        value: PROFILE.email,
+        href: `mailto:${PROFILE.email}`,
+        copyValue: PROFILE.email,
     },
     {
         id: "github",
         label: "GitHub",
-        value: "github.com/j4b3-21",
-        href: "https://github.com/j4b3-21",
-        copyValue: "https://github.com/j4b3-21",
+        value: PROFILE.github.replace(/^https?:\/\//, ""),
+        href: PROFILE.github,
     },
     {
         id: "linkedin",
         label: "LinkedIn",
-        value: "linkedin.com/in/bhuvan-m-acharya-7b9256335",
-        href: "https://www.linkedin.com/in/bhuvan-m-acharya-7b9256335/",
-        copyValue: "https://www.linkedin.com/in/bhuvan-m-acharya-7b9256335/",
+        value: PROFILE.linkedinLabel,
+        href: PROFILE.linkedin,
     },
     {
         id: "resume",
@@ -161,4 +159,14 @@ export const JOURNAL_YEARS = [
     { year: 2027, subtitle: "Research and experimentation." },
     { year: 2026, subtitle: "Building, leadership and community." },
     { year: 2025, subtitle: "Foundations and exploration." },
+    { year: 2024, subtitle: "First year — the vocabulary." },
+];
+
+export const NAV_LINKS = [
+    { to: "/work", label: "Work" },
+    { to: "/journey", label: "Journey" },
+    { to: "/research", label: "Research" },
+    { to: "/about", label: "About" },
+    { to: "/resume", label: "Résumé" },
+    { to: "/contact", label: "Contact" },
 ];

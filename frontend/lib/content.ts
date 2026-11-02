@@ -8,10 +8,36 @@ const CONTENT_ROOT = path.join(process.cwd(), "content");
 
 /* Drafts are visible only in development; production renders published entries only. */
 export const IS_DEV = process.env.NODE_ENV === "development";
+const PLACEHOLDER_PATTERN = /\[[^\]]*(slot|to be (added|filled|written|confirmed)|your (story|reflection|closing)|photographs)[^\]]*\]/gi;
+const warnedPlaceholderFiles = new Set<string>();
+
+export function stripPlaceholders(text: string): string {
+    return text
+        .replace(PLACEHOLDER_PATTERN, "")
+        .replace(/^\s*\*Draft[^*\n]*\*?\s*$/gim, "")
+        .split("\n")
+        .filter((line) => {
+            const trimmed = line.replace(/^(\s*[-*+]\s+|\s*\d+\.\s+)/, "").trim();
+            return trimmed.length > 0;
+        })
+        .join("\n")
+        .replace(/\s+with\s*([,.!?]|$)/gi, "$1")
+        .replace(/\s{2,}/g, " ")
+        .trim();
+}
+
+function contentText(text: string): string {
+    return IS_DEV ? text : stripPlaceholders(text);
+}
 
 function parseDoc(raw: string, slug: string) {
     const { data, content } = matter(raw);
-    return { data, body: content.trim(), slug };
+    if ((PLACEHOLDER_PATTERN.test(raw) || /^\s*\*Draft/m.test(raw)) && !warnedPlaceholderFiles.has(`${slug}`)) {
+        console.warn(`[content] placeholders remain in ${slug}`);
+        warnedPlaceholderFiles.add(slug);
+        PLACEHOLDER_PATTERN.lastIndex = 0;
+    }
+    return { data, body: contentText(content.trim()), slug };
 }
 
 function loadDir<S extends z.ZodTypeAny>(dir: string, schema: S): z.output<S>[] {
@@ -101,8 +127,13 @@ export type LeadershipEntry = z.infer<typeof leadershipSchema>;
 const byDateDesc = (a: JournalEntry, b: JournalEntry) => (a.date < b.date ? 1 : -1);
 
 export function getProjects(): Project[] {
-    const priority: Record<string, number> = { neuroweave: 0, campushire: 1, bm4a: 2 };
-    return loadDir("projects", projectSchema).sort(
+    const priority: Record<string, number> = { campushire: 0, neuroweave: 1, bm4a: 2 };
+    return loadDir("projects", projectSchema).map((project) => ({
+        ...project,
+        role: contentText(project.role),
+        contribution: contentText(project.contribution),
+        outcome: contentText(project.outcome),
+    })).sort(
         (a, b) => (priority[a.slug] ?? 99) - (priority[b.slug] ?? 99) || a.slug.localeCompare(b.slug)
     );
 }
@@ -131,7 +162,11 @@ export function getResearch(): ResearchEntry[] {
 
 export function getLeadership(): LeadershipEntry[] {
     const order = ["quantum-club", "tp-cell", "webdev-club"];
-    return loadDir("leadership", leadershipSchema).sort(
+    return loadDir("leadership", leadershipSchema).map((entry) => ({
+        ...entry,
+        facts: entry.facts.map(contentText).filter(Boolean),
+        body: contentText(entry.body),
+    })).sort(
         (a, b) => order.indexOf(a.id) - order.indexOf(b.id)
     );
 }
@@ -145,7 +180,7 @@ export function groupByYear(entries: JournalEntry[], years: { year: number; subt
         year,
         subtitle,
         entries: entries.filter((e) => e.year === year),
-    }));
+    })).filter((group) => group.entries.length > 0);
 }
 
 export function projectSlugs(): string[] {

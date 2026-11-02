@@ -7,6 +7,7 @@ import MarkdownWithDiagram from "@/components/MarkdownWithDiagram";
 import { Reveal } from "@/components/Reveal";
 import { getProject, getProjects } from "@/lib/content";
 import { absoluteUrl } from "@/lib/site";
+import TableOfContents from "@/components/TableOfContents";
 
 export function generateStaticParams() {
     return getProjects().map((p) => ({ slug: p.slug }));
@@ -33,13 +34,18 @@ export default async function WorkDetail({ params }: { params: Promise<{ slug: s
 
     const idx = projects.findIndex((x) => x.slug === p.slug);
     const next = projects[(idx + 1) % projects.length];
+    const metaColumns = 2 + Number(Boolean(p.repo)) + Number(Boolean(p.demo));
+    const headings = [...p.body.matchAll(/^##\s+(.+)$/gm)].map((match) => ({
+        label: match[1].trim().replace(/[*`]/g, ""),
+        id: match[1].trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+    }));
 
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "SoftwareSourceCode",
         name: p.title,
         description: p.tagline,
-        author: { "@type": "Person", name: "Bhuvan M. Acharya" },
+        author: "Bhuvan M. Acharya",
         codeRepository: p.repo ?? undefined,
         url: absoluteUrl(`/work/${p.slug}`),
     };
@@ -51,13 +57,13 @@ export default async function WorkDetail({ params }: { params: Promise<{ slug: s
                 <Link
                     href="/work"
                     data-testid="case-back-link"
-                    className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-cream/85 hover:text-glowlow transition-colors"
+                    className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-cream/85 hover:text-glowlow transition-colors"
                 >
                     <ArrowLeft size={12} /> All work
                 </Link>
 
                 <Reveal>
-                    <div className="mt-10 flex flex-wrap items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-cream/85">
+                    <div className="mt-10 flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-cream/85">
                         <span className="text-glowlow">Case study</span>
                         <span>/</span>
                         <span>{p.year}</span>
@@ -71,47 +77,39 @@ export default async function WorkDetail({ params }: { params: Promise<{ slug: s
                 </Reveal>
 
                 <Reveal delay={0.08}>
-                    <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 border-b border-cream/15 pb-8">
+                    <div className={`mt-12 grid grid-cols-2 ${metaColumns === 4 ? "md:grid-cols-4" : metaColumns === 3 ? "md:grid-cols-3" : "md:grid-cols-2"} gap-6 border-b border-cream/15 pb-8`}>
                         <div>
-                            <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-cream/85">Role</p>
+                            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-cream/85">Role</p>
                             <p className="mt-2 text-sm text-cream/90 leading-relaxed">{p.role}</p>
                         </div>
                         <div>
-                            <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-cream/85">Stack</p>
+                            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-cream/85">Stack</p>
                             <p className="mt-2 text-sm text-cream/90 leading-relaxed">{p.stack.join(" · ")}</p>
                         </div>
-                        <div>
-                            <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-cream/85">Source</p>
-                            {p.repo ? (
-                                <a
-                                    href={p.repo}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    data-testid="case-repo-link"
-                                    className="mt-2 inline-flex items-center gap-1.5 text-sm text-cream hover:text-glowlow transition-colors link-sweep"
-                                >
-                                    GitHub <ArrowUpRight size={12} />
-                                </a>
-                            ) : (
-                                <p className="mt-2 text-sm text-cream/85">Not available</p>
-                            )}
-                        </div>
-                        <div>
-                            <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-cream/85">Live demo</p>
-                            {p.demo ? (
-                                <a
-                                    href={p.demo}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    data-testid="case-demo-link"
-                                    className="mt-2 inline-flex items-center gap-1.5 text-sm hover:text-glowlow transition-colors link-sweep"
-                                >
-                                    {p.demoLabel} <ArrowUpRight size={12} />
-                                </a>
-                            ) : (
-                                <p className="mt-2 text-sm text-cream/85">Not publicly deployed</p>
-                            )}
-                        </div>
+                        {p.repo ? <div>
+                            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-cream/85">Source</p>
+                            <a
+                                href={p.repo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                data-testid="case-repo-link"
+                                className="mt-2 inline-flex items-center gap-1.5 text-sm text-cream hover:text-glowlow transition-colors link-sweep"
+                            >
+                                GitHub <ArrowUpRight size={12} />
+                            </a>
+                        </div> : null}
+                        {p.demo ? <div>
+                            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-cream/85">Live demo</p>
+                            <a
+                                href={p.demo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                data-testid="case-demo-link"
+                                className="mt-2 inline-flex items-center gap-1.5 text-sm hover:text-glowlow transition-colors link-sweep"
+                            >
+                                {p.demoLabel} <ArrowUpRight size={12} />
+                            </a>
+                        </div> : null}
                     </div>
                 </Reveal>
 
@@ -130,16 +128,14 @@ export default async function WorkDetail({ params }: { params: Promise<{ slug: s
                             </div>
                         </div>
                         {p.imageCaption ? (
-                            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-cream/85">{p.imageCaption}</p>
+                            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-cream/85">{p.imageCaption}</p>
                         ) : null}
                     </Reveal>
                 ) : null}
 
                 <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-10">
                     <div className="hidden lg:block lg:col-span-3">
-                        <p className="sticky top-28 font-mono text-[9px] uppercase tracking-[0.25em] text-cream/85 leading-loose">
-                            Problem · Motivation · Architecture<br />· Decisions · Challenges<br />· Contribution · Outcome
-                        </p>
+                        <TableOfContents headings={headings} />
                     </div>
                     <div className="lg:col-span-8 max-w-3xl">
                         <MarkdownWithDiagram body={p.body} dark />
@@ -147,16 +143,16 @@ export default async function WorkDetail({ params }: { params: Promise<{ slug: s
                 </div>
 
                 <div className="mt-20 border-t border-cream/15 pt-10" data-testid="case-outcome">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-cream/85">Outcome</p>
+                    <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-cream/85">Outcome</p>
                     <p className="mt-4 max-w-3xl font-serif text-xl sm:text-2xl leading-snug text-cream/90">{p.outcome}</p>
                     <div className="mt-8 flex flex-wrap gap-4">
                         {p.demo ? (
-                            <a href={p.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-cream text-void px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em] hover:bg-glowlow hover:text-cream transition-colors">
+                            <a href={p.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-cream text-void px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.2em] hover:bg-glowlow hover:text-cream transition-colors">
                                 {p.demoLabel} <ArrowUpRight size={11} />
                             </a>
                         ) : null}
                         {p.repo ? (
-                            <a href={p.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-cream/30 px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em] hover:border-glowlow hover:text-glowlow transition-colors">
+                            <a href={p.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-cream/30 px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.2em] hover:border-glowlow hover:text-glowlow transition-colors">
                                 Repository <ArrowUpRight size={11} />
                             </a>
                         ) : null}
@@ -165,7 +161,7 @@ export default async function WorkDetail({ params }: { params: Promise<{ slug: s
 
                 <div className="mt-24 border-t border-cream/15 pt-10">
                     <Link href={`/work/${next.slug}`} data-testid="case-next-link" className="group block">
-                        <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-cream/85">Next case study</p>
+                        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-cream/85">Next case study</p>
                         <p className="mt-3 font-serif text-3xl sm:text-5xl group-hover:text-glowlow transition-colors">
                             {next.title} <ArrowUpRight size={26} className="inline ml-2" />
                         </p>

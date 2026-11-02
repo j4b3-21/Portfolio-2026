@@ -17,19 +17,20 @@ function EntryRow({ entry, open, onToggle }: { entry: JournalEntry; open: boolea
                 data-testid={`journal-toggle-${entry.slug}`}
                 onClick={onToggle}
                 aria-expanded={open}
+                aria-controls={`journal-body-${entry.slug}`}
                 className="w-full grid grid-cols-12 gap-3 sm:gap-4 items-baseline py-6 sm:py-7 text-left group"
             >
-                <span className="col-span-12 sm:col-span-3 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.18em] text-ink/75">
+                <span className="col-span-12 sm:col-span-3 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ink/75">
                     <span>{dateLabel}</span>
                     {entry.status === "draft" ? (
-                        <span className="border border-ink/40 px-1.5 py-0.5 text-[8px] text-ink/75">Draft</span>
+                        <span className="border border-ink/40 px-1.5 py-0.5 text-[11px] text-ink/75">Draft</span>
                     ) : null}
                 </span>
                 <span className="col-span-10 sm:col-span-7 font-serif font-normal text-xl sm:text-2xl leading-snug group-hover:text-electric transition-colors">
                     {entry.title}
                 </span>
                 <span className="col-span-2 sm:col-span-2 justify-self-end flex items-center gap-3">
-                    <span className="hidden sm:inline font-mono text-[9px] uppercase tracking-[0.2em] text-ink/75">
+                    <span className="hidden sm:inline font-mono text-[11px] uppercase tracking-[0.2em] text-ink/75">
                         {entry.category}
                     </span>
                     <Plus
@@ -42,6 +43,7 @@ function EntryRow({ entry, open, onToggle }: { entry: JournalEntry; open: boolea
             <AnimatePresence initial={false}>
                 {open && (
                     <motion.div
+                        id={`journal-body-${entry.slug}`}
                         data-testid={`journal-entry-body-${entry.slug}`}
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
@@ -59,7 +61,7 @@ function EntryRow({ entry, open, onToggle }: { entry: JournalEntry; open: boolea
                                         <Link
                                             key={slug}
                                             href={`/work/${slug}`}
-                                            className="inline-flex items-center gap-1.5 border border-ink/25 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-ink/80 hover:border-electric hover:text-electric transition-colors"
+                                            className="inline-flex items-center gap-1.5 border border-ink/25 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink/80 hover:border-electric hover:text-electric transition-colors"
                                         >
                                             {slug} <ArrowUpRight size={10} />
                                         </Link>
@@ -69,7 +71,7 @@ function EntryRow({ entry, open, onToggle }: { entry: JournalEntry; open: boolea
                             <Link
                                 href={`/journey/${entry.slug}`}
                                 data-testid={`journal-read-${entry.slug}`}
-                                className="mt-7 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-ink link-sweep"
+                                className="mt-7 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-ink link-sweep"
                             >
                                 Read as article <ArrowUpRight size={11} />
                             </Link>
@@ -90,31 +92,23 @@ export default function JournalTimeline({ entries, years }: {
         <div data-testid="journal-timeline">
             {years.map(({ year, subtitle }) => {
                 const yearEntries = entries.filter((e) => e.year === year);
+                if (yearEntries.length === 0) return null;
                 return (
                     <div key={year} className="mb-14" data-testid={`journal-year-${year}`}>
                         <div className="flex flex-wrap items-baseline gap-4 mb-6">
                             <h3 className="font-serif font-normal text-4xl sm:text-5xl">{year}</h3>
-                            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink/75">{subtitle}</p>
+                            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink/75">{subtitle}</p>
                         </div>
-                        {yearEntries.length === 0 ? (
-                            <div className="border border-dashed border-ink/30 px-6 py-8 flex flex-wrap items-center justify-between gap-4">
-                                <p className="text-sm text-ink/75">Chapter not written yet — this year hasn't happened.</p>
-                                <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-ink/75 border border-ink/30 px-2 py-1">
-                                    Upcoming chapter
-                                </span>
-                            </div>
-                        ) : (
-                            <div className="border-t border-ink/10">
-                                {yearEntries.map((e) => (
-                                    <EntryRow
-                                        key={e.slug}
-                                        entry={e}
-                                        open={openId === e.slug}
-                                        onToggle={() => setOpenId(openId === e.slug ? null : e.slug)}
-                                    />
-                                ))}
-                            </div>
-                        )}
+                        <div className="border-t border-ink/10">
+                            {yearEntries.map((e) => (
+                                <EntryRow
+                                    key={e.slug}
+                                    entry={e}
+                                    open={openId === e.slug}
+                                    onToggle={() => setOpenId(openId === e.slug ? null : e.slug)}
+                                />
+                            ))}
+                        </div>
                     </div>
                 );
             })}

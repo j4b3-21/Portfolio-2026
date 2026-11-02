@@ -30,16 +30,11 @@ export default function ProjectRow({ project, index, flip = false }: { project: 
                                 <ProjectCover variant={project.cover} title={project.title} spec={project.stack.slice(0, 3).join(" · ")} />
                             )}
                         </div>
-                        {project.imageCaption ? (
-                            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-ink/70">
-                                {project.imageCaption}
-                            </p>
-                        ) : null}
                     </Link>
                 </div>
 
                 <div className={`md:col-span-5 ${flip ? "md:order-1" : ""}`}>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink/70">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink/70">
                         P.{num} — {statusLabel} · {project.year}
                     </p>
                     <Link href={`/work/${project.slug}`} className="mt-3 block">
@@ -48,10 +43,10 @@ export default function ProjectRow({ project, index, flip = false }: { project: 
                         </h3>
                     </Link>
                     <p className="mt-4 text-[15px] leading-relaxed text-ink/80">{project.tagline}</p>
-                    {project.contribution ? (
+                    {project.role ? (
                         <p className="mt-4 text-[13px] leading-relaxed text-ink/70">
-                            <span className="font-mono text-[9px] uppercase tracking-[0.22em] mr-2 text-ink/70">Team</span>
-                            {project.contribution}
+                            <span className="font-mono text-[11px] uppercase tracking-[0.18em] mr-2 text-ink/70">Role</span>
+                            {project.role}
                         </p>
                     ) : null}
 
@@ -59,7 +54,7 @@ export default function ProjectRow({ project, index, flip = false }: { project: 
                         <Link
                             href={`/work/${project.slug}`}
                             data-testid={`project-open-${project.slug}`}
-                            className="inline-flex items-center gap-2 bg-ink text-paper px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em] transition-colors duration-300 hover:bg-electric"
+                            className="inline-flex items-center gap-2 bg-ink text-paper px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.2em] transition-colors duration-300 hover:bg-electric"
                         >
                             Open case study
                             <ArrowUpRight size={12} />
@@ -70,7 +65,7 @@ export default function ProjectRow({ project, index, flip = false }: { project: 
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 data-testid={`project-repo-${project.slug}`}
-                                className="link-sweep inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-ink/85"
+                                className="link-sweep inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-ink/85"
                             >
                                 GitHub <ArrowUpRight size={11} />
                             </a>

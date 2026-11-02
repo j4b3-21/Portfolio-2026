@@ -43,7 +43,7 @@ export default async function JourneyDetail({ params }: { params: Promise<{ slug
         "@type": "Article",
         headline: entry.title,
         datePublished: entry.date,
-        author: { "@type": "Person", name: "Bhuvan M. Acharya" },
+        author: "Bhuvan M. Acharya",
         url: absoluteUrl(`/journey/${entry.slug}`),
     };
 
@@ -56,11 +56,11 @@ export default async function JourneyDetail({ params }: { params: Promise<{ slug
                         <Link
                             href="/journey"
                             data-testid="article-back-link"
-                            className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-ink/85 hover:text-electric transition-colors"
+                            className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-ink/85 hover:text-electric transition-colors"
                         >
                             <ArrowLeft size={12} /> The journal
                         </Link>
-                        <div className="mt-10 flex flex-wrap items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-ink/85">
+                        <div className="mt-10 flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-ink/85">
                             <span>{dateLabel}</span>
                             <span>/</span>
                             <span>{entry.category}</span>
@@ -69,7 +69,7 @@ export default async function JourneyDetail({ params }: { params: Promise<{ slug
                         {entry.tags?.length ? (
                             <div className="mt-6 flex flex-wrap gap-2">
                                 {entry.tags.map((t) => (
-                                    <span key={t} className="font-mono text-[9px] uppercase tracking-[0.18em] text-ink/80 border border-ink/20 px-2.5 py-1">
+                                    <span key={t} className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink/80 border border-ink/20 px-2.5 py-1">
                                         {t}
                                     </span>
                                 ))}
@@ -83,13 +83,13 @@ export default async function JourneyDetail({ params }: { params: Promise<{ slug
 
                     {entry.related?.length ? (
                         <Reveal delay={0.12} className="mt-14 border-t border-ink/10 pt-8">
-                            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink/85">Related projects</p>
+                            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink/85">Related projects</p>
                             <div className="mt-5 flex flex-wrap gap-3">
                                 {entry.related.map((s) => (
                                     <Link
                                         key={s}
                                         href={`/work/${s}`}
-                                        className="inline-flex items-center gap-1.5 border border-ink/25 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] hover:border-electric hover:text-electric transition-colors"
+                                        className="inline-flex items-center gap-1.5 border border-ink/25 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] hover:border-electric hover:text-electric transition-colors"
                                     >
                                         {s} <ArrowUpRight size={11} />
                                     </Link>

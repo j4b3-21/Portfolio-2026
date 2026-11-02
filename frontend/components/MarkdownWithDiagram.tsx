@@ -7,9 +7,17 @@ export default function MarkdownWithDiagram({ body, dark = false, className = ""
     const parts = body.split("[[diagram]]");
     return (
         <div className={className}>
-            <Markdown body={parts[0] ?? ""} dark={dark} />
-            {parts.length > 1 && <Diagram slug={parts[1]?.trim().split("\n")[0] ?? ""} dark={dark} />}
-            {parts.slice(2).length > 0 && <Markdown body={parts.slice(2).join("\n")} dark={dark} />}
+            {parts.map((part, index) => {
+                if (index === 0) return <Markdown key={index} body={part} dark={dark} />;
+                const lines = part.trimStart().split("\n");
+                const slug = lines.shift()?.trim() ?? "";
+                return (
+                    <div key={index}>
+                        <Diagram slug={slug} dark={dark} />
+                        <Markdown body={lines.join("\n")} dark={dark} />
+                    </div>
+                );
+            })}
         </div>
     );
 }

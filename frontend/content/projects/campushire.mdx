@@ -8,7 +8,7 @@ featured: true
 role: "Designer & builder — for the Training & Placement cell of IIIT Tiruchirappalli"
 stack: ["Java 25", "Spring Boot 4.1", "Spring Modulith", "Next.js 16", "PostgreSQL 18", "Keycloak 26", "OpenFGA", "Redis 8", "MinIO", "Docker"]
 repo: "https://github.com/j4b3-21/CampusHire"
-og: "https://raw.githubusercontent.com/j4b3-21/CampusHire/main/frontend/docs/screenshots/dashboard-tpo.png"
+og: "/images/projects/campushire/dashboard-tpo.png"
 imageCaption: "Demo data"
 cover: "screenshot"
 contribution: "Designed and built by me, with AI-assisted tooling — an application of BM4A, the platform built alongside it."
@@ -23,10 +23,10 @@ Placement season runs on spreadsheets, chat groups and hope. The placement cell 
 
 CampusHire is built for the Training & Placement cell of IIIT Tiruchirappalli — it encodes the process the cell runs by hand today: Excel imports, eligibility, drives, applications, offers and reporting.
 
-![Placement officer dashboard](https://raw.githubusercontent.com/j4b3-21/CampusHire/main/frontend/docs/screenshots/dashboard-tpo.png)
+![Placement officer dashboard](/images/projects/campushire/dashboard-tpo.png)
 *The placement officer dashboard. Demo data.*
 
-![Application pipeline board](https://raw.githubusercontent.com/j4b3-21/CampusHire/main/frontend/docs/screenshots/pipeline-board-light.png)
+![Application pipeline board](/images/projects/campushire/pipeline-board-light.png)
 *The application pipeline board — every candidate stage, visible. Demo data.*
 
 ## Architecture
@@ -36,7 +36,7 @@ campushire
 
 The placement officer imports students from Excel, publishes drives with eligibility rules, students sign in with their college Google account and apply in one click, recruiters shortlist their own applicants, and everyone sees live placement analytics — with role-based access enforced on every record and field.
 
-![Drive eligibility rules with live preview](https://raw.githubusercontent.com/j4b3-21/CampusHire/main/frontend/docs/screenshots/drive-eligibility.png)
+![Drive eligibility rules with live preview](/images/projects/campushire/drive-eligibility.png)
 *Eligibility rules with a live preview of who qualifies. Demo data.*
 
 ## Technical decisions
@@ -48,14 +48,14 @@ The placement officer imports students from Excel, publishes drives with eligibi
 - **244 automated tests** (JUnit 5 + Testcontainers covering PostgreSQL, OpenFGA, Redis, Mailpit and MinIO) gate CI.
 - **Production topology as code**: Docker Compose with Nginx (TLS), two stateless API replicas, Keycloak, PostgreSQL, OpenFGA, Redis, MinIO, plus Prometheus/Grafana and k6.
 
-![Roles and access matrix](https://raw.githubusercontent.com/j4b3-21/CampusHire/main/frontend/docs/screenshots/roles-matrix-light.png)
+![Roles and access matrix](/images/projects/campushire/roles-matrix-light.png)
 *Role-based access configured as data. Demo data.*
 
 ## Engineering challenges
 
 Modeling eligibility as data instead of code, keeping Excel imports idempotent (dry run + downloadable error report), making OpenFGA tuple sync survive partial failure, and keeping a two-replica topology realistic about what it can serve.
 
-![Excel/CSV import wizard](https://raw.githubusercontent.com/j4b3-21/CampusHire/main/frontend/docs/screenshots/import-wizard.png)
+![Excel/CSV import wizard](/images/projects/campushire/import-wizard.png)
 *The import wizard — Excel and CSV in, validated records out. Demo data.*
 
 ## Personal contribution
@@ -66,10 +66,10 @@ Designed and built by me, with AI-assisted tooling — an application of **BM4A*
 
 **In development** — the full stack runs locally and in the one-server production compose; **244 automated tests** pass in CI; analytics over 10,000 students and 200,000 applications answer in under 50 ms (integration test). The k6 load-test run on the target server and a dedicated security review are the next gates before the college rollout.
 
-![Placement analytics](https://raw.githubusercontent.com/j4b3-21/CampusHire/main/frontend/docs/screenshots/analytics.png)
+![Placement analytics](/images/projects/campushire/analytics.png)
 *Live placement analytics, built on PostgreSQL materialized views. Demo data.*
 
-![Student drives on mobile](https://raw.githubusercontent.com/j4b3-21/CampusHire/main/frontend/docs/screenshots/student-drives-mobile.png)
+![Student drives on mobile](/images/projects/campushire/student-drives-mobile.png)
 *Student drives on mobile — where students actually check them. Demo data.*
 
 ## Lessons learned

@@ -4,16 +4,28 @@ import { useRef, useState } from "react";
 import { Copy, Check } from "lucide-react";
 
 export default function CopyButton({ value, label }: { value: string; label: string }) {
-    const [copied, setCopied] = useState(false);
+    const [status, setStatus] = useState<"idle" | "copied" | "failed">("idle");
     const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const onCopy = () => {
-        if (!navigator.clipboard) return;
-        navigator.clipboard.writeText(value).then(() => {
-            setCopied(true);
+    const onCopy = async () => {
+        try {
+            if (navigator.clipboard) await navigator.clipboard.writeText(value);
+            else {
+                const textarea = document.createElement("textarea");
+                textarea.value = value;
+                textarea.style.position = "fixed";
+                textarea.style.opacity = "0";
+                document.body.appendChild(textarea);
+                textarea.select();
+                if (!document.execCommand("copy")) throw new Error("copy failed");
+                textarea.remove();
+            }
+            setStatus("copied");
             if (timer.current) clearTimeout(timer.current);
-            timer.current = setTimeout(() => setCopied(false), 2000);
-        });
+            timer.current = setTimeout(() => setStatus("idle"), 2000);
+        } catch {
+            setStatus("failed");
+        }
     };
 
     return (
@@ -23,9 +35,9 @@ export default function CopyButton({ value, label }: { value: string; label: str
             aria-label={`Copy ${label}`}
             className="inline-flex items-center gap-1.5 p-2 text-ink/70 hover:text-electric transition-colors"
         >
-            {copied ? <Check size={15} className="text-electric" /> : <Copy size={15} />}
-            <span aria-live="polite" className="font-mono text-[10px] uppercase tracking-[0.15em] w-14 text-left">
-                {copied ? "Copied ✓" : ""}
+            {status === "copied" ? <Check size={15} className="text-electric" /> : <Copy size={15} />}
+            <span aria-live="polite" className="font-mono text-[11px] uppercase tracking-[0.15em] w-14 text-left">
+                {status === "copied" ? "Copied ✓" : status === "failed" ? "Copy failed" : ""}
             </span>
         </button>
     );

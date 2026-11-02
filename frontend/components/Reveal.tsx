@@ -12,6 +12,7 @@ export function Reveal({ children, delay = 0, y = 24, className = "", once = tru
     const reduce = useReducedMotion();
     return (
         <motion.div
+            data-reveal
             className={className}
             initial={reduce ? { opacity: 1 } : { opacity: 0, y }}
             whileInView={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
@@ -33,7 +34,7 @@ export function MaskedLines({ lines, className = "", delay = 0, as: Tag = "h1" }
             {lines.map((line, i) => (
                 <span className="mask-line" key={i}>
                     <motion.span
-                        initial={reduce ? { y: 0, opacity: 1 } : { y: "112%" }}
+                        initial={{ y: 0, opacity: 1 }}
                         animate={{ y: 0 }}
                         transition={{ duration: 1.05, delay: delay + i * 0.13, ease: [...EASE] }}
                     >
@@ -50,7 +51,7 @@ export function SectionHead({ index, label, tone = "light", className = "" }: {
 }) {
     return (
         <Reveal className={className}>
-            <p className={`font-mono text-[11px] uppercase tracking-[0.25em] ${tone === "dark" ? "text-cream/70" : "text-ink/70"}`}>
+            <p className={`font-mono text-[11px] uppercase tracking-[0.18em] ${tone === "dark" ? "text-cream/70" : "text-ink/70"}`}>
                 {index} <span className={tone === "dark" ? "text-glowlow" : "text-electric"}>/</span> {label}
             </p>
         </Reveal>

@@ -5,7 +5,10 @@ export default function Markdown({ body, dark = false, className = "" }: {
 }) {
     let html = body;
     try {
-        html = renderBody(body);
+        html = renderBody(body).replace(
+            /\[[^\]]*(slot|to be (added|filled|written|confirmed)|your (story|reflection|closing)|photographs)[^\]]*\]/gi,
+            '<mark class="placeholder-mark">$&</mark>'
+        );
     } catch {
         html = `<p>${body}</p>`;
     }

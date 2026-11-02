@@ -3,18 +3,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
-import { CHANNELS } from "@/lib/site";
-import { EASE, prefersReducedMotion } from "@/lib/motion";
-
-const LINKS = [
-    { to: "/work", label: "Work" },
-    { to: "/journey", label: "Journey" },
-    { to: "/research", label: "Research" },
-    { to: "/about", label: "About" },
-    { to: "/contact", label: "Contact" },
-];
+import { CHANNELS, NAV_LINKS } from "@/lib/site";
+import { EASE } from "@/lib/motion";
 
 export function Mark({ className = "w-7 h-7" }: { className?: string }) {
     return (
@@ -32,7 +24,7 @@ export default function Nav() {
     const [open, setOpen] = useState(false);
     const pathname = usePathname();
     const dark = pathname.startsWith("/work/") || pathname === "/research";
-    const reduce = prefersReducedMotion();
+    const reduce = useReducedMotion();
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 30);
@@ -50,11 +42,7 @@ export default function Nav() {
     const isActive = (to: string) =>
         to === "/" ? pathname === "/" : pathname.startsWith(to);
 
-    const barTone = open || dark
-        ? open
-            ? "text-cream"
-            : "text-cream"
-        : "text-ink";
+    const barTone = open || dark ? "text-cream" : "text-ink";
 
     return (
         <header
@@ -86,7 +74,7 @@ export default function Nav() {
                 </Link>
 
                 <nav className="hidden md:flex items-center gap-9" aria-label="Primary">
-                    {LINKS.map((l) => (
+                    {NAV_LINKS.map((l) => (
                         <Link
                             key={l.to}
                             href={l.to}
@@ -125,7 +113,7 @@ export default function Nav() {
                         className="md:hidden fixed inset-0 top-0 bg-void text-cream flex flex-col justify-between pt-28 pb-10 px-6"
                     >
                         <nav className="flex flex-col" aria-label="Mobile">
-                            {LINKS.map((l, i) => (
+                            {NAV_LINKS.map((l, i) => (
                                 <motion.div
                                     key={l.to}
                                     initial={reduce ? { opacity: 1 } : { opacity: 0, y: 24 }}
@@ -140,7 +128,7 @@ export default function Nav() {
                                         <span className={`font-serif text-4xl ${isActive(l.to) ? "text-glowlow" : ""}`}>
                                             {l.label}
                                         </span>
-                                        <span className="font-mono text-[10px] text-cream/70">0{i + 1}</span>
+                                        <span className="font-mono text-[11px] text-cream/70">0{i + 1}</span>
                                     </Link>
                                 </motion.div>
                             ))}
@@ -149,10 +137,10 @@ export default function Nav() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.45, duration: 0.5 }}
-                            className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-cream/70"
+                            className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-cream/70"
                         >
                             <span>An ongoing exploration</span>
-                            <a href="https://github.com/j4b3-21" className="flex items-center gap-1 text-cream" target="_blank" rel="noopener noreferrer">
+                            <a href={CHANNELS.find((channel) => channel.id === "github")?.href} className="flex items-center gap-1 text-cream" target="_blank" rel="noopener noreferrer">
                                 GitHub <ArrowUpRight size={12} />
                             </a>
                         </motion.div>

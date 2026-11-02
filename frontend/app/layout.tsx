@@ -3,7 +3,6 @@ import { Instrument_Serif, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import LenisSetup from "@/components/LenisSetup";
 import Plausible from "@/components/Plausible";
 import { PROFILE, SITE_URL } from "@/lib/site";
 
@@ -34,9 +33,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
+            <head><noscript><style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style></noscript></head>
             <body className="grain">
                 <a href="#main" className="skip-link print-hidden">Skip to content</a>
-                <LenisSetup />
                 <Nav />
                 <main id="main">{children}</main>
                 <Footer />

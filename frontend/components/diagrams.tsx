@@ -63,7 +63,7 @@ export default function Diagram({ slug, dark = false }: { slug: string; dark?: b
                 {slug === "offline" && <Offline id={id} />}
                 {slug === "ptfs" && <PTFS id={id} />}
             </svg>
-            <figcaption className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-ink/70 dark:text-cream/70">
+            <figcaption className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-ink/70 dark:text-cream/70">
                 Architecture — {slug}
             </figcaption>
         </figure>

@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowDown } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import Sculpture from "@/components/Sculpture";
-import { MaskedLines, EASE, prefersReducedMotion } from "@/components/Reveal";
+import { MaskedLines, EASE } from "@/components/Reveal";
 import { PROFILE } from "@/lib/site";
 
 const META = [
@@ -15,20 +15,19 @@ const META = [
 ];
 
 export default function Hero() {
-    const reduce = prefersReducedMotion();
+    const reduce = useReducedMotion();
     return (
         <section className="relative bg-cols overflow-hidden" data-testid="hero-section" aria-label="Introduction">
             <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-28 sm:pt-32 lg:pt-36 pb-14 lg:pb-16 min-h-[92svh] flex flex-col">
-                <div className="relative flex-1 flex items-center">
+                <div className="relative flex-1 flex flex-col items-start lg:flex-row lg:items-center">
+                    <motion.p
+                        initial={false}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.1, ease: [...EASE] }}
+                        className="hero-enter font-mono text-[11px] uppercase tracking-[0.18em] text-ink/75"
+                    >
+                        Software Engineering · Research · IIIT Tiruchirappalli '28                    </motion.p>
                     <div className="relative z-10 max-w-full lg:max-w-[60%]">
-                        <motion.p
-                            initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.7, delay: 0.1, ease: [...EASE] }}
-                            className="font-mono text-[11px] uppercase tracking-[0.28em] text-ink/75"
-                        >
-                            An ongoing exploration of technology, systems and ideas
-                        </motion.p>
 
                         <MaskedLines
                             as="h1"
@@ -43,19 +42,19 @@ export default function Hero() {
                         />
 
                         <motion.p
-                            initial={reduce ? { opacity: 1 } : { opacity: 0, y: 16 }}
+                            initial={false}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.62, ease: [...EASE] }}
-                            className="mt-7 max-w-md text-[15px] sm:text-base leading-relaxed text-ink/85"
+                            className="hero-enter mt-7 max-w-md text-[15px] sm:text-base leading-relaxed text-ink/85"
                         >
                             {PROFILE.description}
                         </motion.p>
 
                         <motion.div
-                            initial={reduce ? { opacity: 1 } : { opacity: 0, y: 16 }}
+                            initial={false}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.74, ease: [...EASE] }}
-                            className="mt-9 flex flex-wrap items-center gap-6"
+                            className="hero-enter mt-9 flex flex-wrap items-center gap-6"
                         >
                             <Link
                                 href="/work"
@@ -63,7 +62,7 @@ export default function Hero() {
                                 className="group inline-flex items-center gap-2 bg-ink text-paper px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.2em] transition-colors duration-300 hover:bg-electric"
                             >
                                 Explore my work
-                                <ArrowDown size={13} className="transition-transform duration-300 group-hover:translate-y-0.5" />
+                                <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-0.5" />
                             </Link>
                             <Link
                                 href="/journey"
@@ -76,22 +75,21 @@ export default function Hero() {
                     </div>
 
                     <div
-                        className="relative mt-12 lg:mt-0 lg:absolute lg:right-[-6%] lg:top-1/2 lg:-translate-y-1/2 w-[88%] sm:w-[70%] lg:w-[48%] aspect-square"
-                        aria-hidden="false"
+                        className="relative mt-12 w-[80%] max-w-[360px] mx-auto lg:mt-0 lg:absolute lg:right-[-6%] lg:top-1/2 lg:-translate-y-1/2 lg:w-[48%] lg:max-w-none aspect-square"
                     >
                         <Sculpture className="absolute inset-0" />
                     </div>
                 </div>
 
                 <motion.div
-                    initial={reduce ? { opacity: 1 } : { opacity: 0 }}
+                    initial={false}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.9, delay: 0.9 }}
                 >
                     <div className="grid grid-cols-2 sm:grid-cols-4 hairline-t">
                         {META.map((m) => (
                             <div key={m.label} className="pt-4 pr-4">
-                                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink/75">{m.label}</p>
+                                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink/75">{m.label}</p>
                                 <p className="mt-1.5 text-sm text-ink/90">{m.value}</p>
                             </div>
                         ))}
