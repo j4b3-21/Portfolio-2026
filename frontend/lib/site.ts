@@ -29,6 +29,46 @@ export const PROFILE = {
     linkedinLabel: "in/bhuvan-m-acharya",
 };
 
+export type ExperienceEntry = {
+    title: string;
+    organization: string;
+    location?: string;
+    period: string;
+    summary: string;
+    bullets: string[];
+};
+
+export const EXPERIENCE: ExperienceEntry[] = [
+    {
+        title: "Founding Software Engineer Intern",
+        organization: "Nebula Technologies Labs Pvt. Ltd.",
+        location: "Remote",
+        period: "May 2026 – Aug 2026",
+        summary: "Built the company CRM platform and its production engineering foundations as a founding engineer.",
+        bullets: [
+            "Architected and developed a production CRM platform with Java, Spring Boot, React, PostgreSQL and REST APIs.",
+            "Designed infrastructure with Docker, Nginx, VPS hosting and Cloudflare.",
+            "Built Jenkins and GitHub Actions CI/CD pipelines, reducing deployment time from approximately 10 minutes to under 1 minute.",
+            "Developed and tested backend services with JUnit, Postman and Bruno while debugging API, database and deployment failures.",
+            "Worked with PostgreSQL indexing, query optimization, transactions, migrations, JSONB and connection pooling.",
+            "Developed concurrent and asynchronous backend components using Java concurrency, thread pools, RabbitMQ and Kafka.",
+            "Collaborated in a six-member engineering team across design discussions, code reviews, Jira workflows and production releases.",
+        ],
+    },
+    {
+        title: "Undergraduate Research Collaborator",
+        organization: "Indian Institute of Information Technology Tiruchirappalli",
+        location: "Tiruchirappalli, India",
+        period: "2026 – Present",
+        summary: "Contributing to reproducibility in computational neuroscience and fMRI-based research.",
+        bullets: [
+            "Developing an open-source graph-native research workflow platform focused on experiment traceability.",
+            "Designing systems for dataset versioning, experiment tracking, workflow orchestration and artifact management.",
+            "Contributing to implementation, evaluation and reproducible research methodologies.",
+        ],
+    },
+];
+
 export type Channel = {
     id: string;
     label: string;

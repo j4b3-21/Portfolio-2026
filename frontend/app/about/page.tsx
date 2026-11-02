@@ -4,7 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import Markdown from "@/components/Markdown";
 import { getLeadership } from "@/lib/content";
-import { PROFILE, DIMENSIONS, JOURNAL_YEARS, absoluteUrl } from "@/lib/site";
+import { PROFILE, DIMENSIONS, EXPERIENCE, JOURNAL_YEARS, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
     title: "About",
@@ -50,6 +50,24 @@ export default function About() {
                                     CampusHire, NeuroWeave and BM4A. And <em>who else can I bring along?</em> — answered by a quantum
                                     club, a placement cell role and a web development community.
                                 </p>
+                            </div>
+                        </Reveal>
+
+                        <Reveal delay={0.1}>
+                            <h2 className="mt-16 font-mono text-[11px] uppercase tracking-[0.18em] text-ink/85 pb-4 border-b border-ink/10">
+                                Experience
+                            </h2>
+                            <div className="mt-6 space-y-8">
+                                {EXPERIENCE.map((entry) => (
+                                    <article key={`${entry.organization}-${entry.title}`} data-testid={`about-experience-${entry.organization.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>
+                                        <div className="flex flex-wrap items-baseline justify-between gap-2">
+                                            <h3 className="font-serif text-2xl">{entry.title}</h3>
+                                            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink/70">{entry.period}</span>
+                                        </div>
+                                        <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-electric">{entry.organization}</p>
+                                        <p className="mt-3 text-[14px] leading-relaxed text-ink/85">{entry.summary}</p>
+                                    </article>
+                                ))}
                             </div>
                         </Reveal>
 

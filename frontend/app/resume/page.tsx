@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Download } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { getProjects, getLeadership } from "@/lib/content";
-import { PROFILE, CAPABILITIES, absoluteUrl } from "@/lib/site";
+import { PROFILE, CAPABILITIES, EXPERIENCE, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
     title: "Résumé",
@@ -62,6 +62,18 @@ export default function Resume() {
                 <Reveal delay={0.1}>
                     <Section title="Education">
                         <Row left={PROFILE.institution} mid="B.Tech, Computer Science & Engineering — Class of 2028" right="2024 – 2028" />
+                    </Section>
+
+                    <Section title="Experience">
+                        {EXPERIENCE.map((entry) => (
+                            <div key={`${entry.organization}-${entry.title}`} className="mb-6" data-testid={`resume-experience-${entry.organization.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>
+                                <Row left={entry.organization} mid={entry.title} right={entry.period} />
+                                <p className="mt-1 text-[12px] text-ink/90">{entry.location ? `${entry.location} — ` : ""}{entry.summary}</p>
+                                <ul className="mt-2 space-y-1">
+                                    {entry.bullets.slice(0, 4).map((bullet) => <Bullet key={bullet}>{bullet}</Bullet>)}
+                                </ul>
+                            </div>
+                        ))}
                     </Section>
 
                     <Section title="Leadership">
